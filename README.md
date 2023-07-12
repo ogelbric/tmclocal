@@ -11,3 +11,9 @@ Create cluster in TKGs
 kubectl apply -f https://github.com/ogelbric/tmclocal/raw/main/tmclocalcluster.yaml 
 cluster.cluster.x-k8s.io/tmclocalcluster created
 ```
+
+#Step 2:
+Install Harbor in the cluster (skip thi step if a regestry exists) 
+
+```
+mkdir harbor-install && cd $_
