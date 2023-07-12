@@ -23,3 +23,8 @@ kubectl vsphere login --server 192.168.2.100 --vsphere-username administrator@vs
 kubectl config use-context tmclocalcluster
 # Create new namespace
 kubectl create namespace projectcontour
+# I for some reason on this server did not have Helm
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
