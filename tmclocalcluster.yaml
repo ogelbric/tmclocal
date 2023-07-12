@@ -1,0 +1,58 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: tmclocalcluster
+  namespace: namespace1000
+spec:
+  clusterNetwork:
+    services:
+      cidrBlocks: ["198.51.100.0/12"]
+    pods:
+      cidrBlocks: ["192.0.2.0/16"]
+    serviceDomain: "cluster.local"
+  topology:
+    class: tanzukubernetescluster
+    version: v1.24.9+vmware.1
+    controlPlane:
+      replicas: 1
+    workers:
+      machineDeployments:
+        - class: node-pool
+          failureDomain: zone1
+          name: node-pool-1
+          replicas: 3
+    variables:
+      - name: vmClass
+        value: best-effort-large
+      - name: storageClass
+        value: pacific-gold-storage-policy
+      - name: defaultStorageClass
+        value: pacific-gold-storage-policy
+# ADDITIONAL VALUES
+      - name: nodePoolVolumes
+        value:
+        - capacity:
+            storage: "40Gi"
+          mountPath: "/var/lib/containerd"
+          name: containerd
+          storageClass: pacific-gold-storage-policy
+      - name: controlPlaneVolumes
+        value:
+        - capacity:
+            storage: "4Gi"
+          mountPath: "/var/lib/etcd"
+          name: etcd
+          storageClass: pacific-gold-storage-policy
+      - name: clusterEncryptionConfigYaml
+        value: |
+          apiVersion: apiserver.config.k8s.io/v1
+          kind: EncryptionConfiguration
+          resources:
+            - resources:
+                - secrets
+              providers:
+                - aescbc:
+                    keys:
+                      - name: key1
+                        secret: QiMgJGYXudtljldVyl+AnXQQlk7r9iUXBfVKqdEfKm8=
+                - identity: {}
