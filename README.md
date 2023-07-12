@@ -17,3 +17,9 @@ Install Harbor in the cluster (skip thi step if a regestry exists)
 
 ```
 mkdir harbor-install && cd $_
+# log onto cluster
+kubectl vsphere login --server 192.168.2.100 --vsphere-username administrator@vsphere.local --tanzu-kubernetes-cluster-namespace  namespace1000 --tanzu-kubernetes-cluster-name tmclocalcluster --insecure-skip-tls-verify
+# Switch context
+kubectl config use-context tmclocalcluster
+# Create new namespace
+kubectl create namespace projectcontour
