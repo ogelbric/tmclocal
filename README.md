@@ -13,7 +13,7 @@ cluster.cluster.x-k8s.io/tmclocalcluster created
 ```
 
 #Step 2:
-Install Harbor in the cluster (skip this step if a regestry exists) 
+Install Harbor in the cluster (skip this step if a registry exists) 
 
 ```
 mkdir harbor-install && cd $_
@@ -70,5 +70,10 @@ spec:
           class: contour
 EOF
 #
+
+
+
+# Delete cert manager
+helm del  cert-manager
 
 
