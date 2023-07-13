@@ -107,7 +107,10 @@ EOF
 helm install harbor bitnami/harbor -f harbor-values.yaml -n harbor
 # Makre sure POD(s) are up
 watch kubectl get pods -n harbor
+# Look at the requested certs
+kubectl -n harbor get certificate
 
+# Wait ?  where are they
 
 
 # Randon Trouble shooting items
