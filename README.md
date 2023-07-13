@@ -105,6 +105,8 @@ EOF
 #
 # Install Harbor
 helm install harbor bitnami/harbor -f harbor-values.yaml -n harbor
+# Makre sure POD(s) are up
+watch kubectl get pods -n harbor
 
 
 
