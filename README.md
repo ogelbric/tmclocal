@@ -32,4 +32,11 @@ kubectl apply -f https://github.com/ogelbric/YAML/raw/master/authorize-psp-for-g
 #
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
-
+helm install ingress bitnami/contour -n projectcontour
+# Watch in a different window
+watch kubectl get pods -n projectcontour
+# Get the IP
+kubectl get svc ingress-contour-envoy --namespace projectcontour -w
+kubectl describe svc ingress-contour-envoy --namespace projectcontour | grep Ingress | awk '{print $3}'
+# Update DNS with IP
+ 
