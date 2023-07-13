@@ -39,4 +39,10 @@ watch kubectl get pods -n projectcontour
 kubectl get svc ingress-contour-envoy --namespace projectcontour -w
 kubectl describe svc ingress-contour-envoy --namespace projectcontour | grep Ingress | awk '{print $3}'
 # Update DNS with IP
- 
+# Add a new subdomain tmclocal.lab.local and apply star A record to the above found IP.
+# (Picture)
+# Add environement variables
+export DOMAIN=tmclocal.lab.local
+export EMAIL_ADDRESS=ogelbrich@vmware.com
+#
+
