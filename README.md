@@ -52,5 +52,23 @@ helm search repo bitnami | grep cert
 helm install cert-manager bitnami/cert-manager --namespace cert-manager  --set installCRDs=true
 # Make sure they are running
 watch kubectl get pods -n cert-manager
+# Generate letsencrypt file
+cat << EOF > letsencrypt-staging.yaml
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: $EMAIL_ADDRESS
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    solvers:
+    - http01:
+        ingress:
+          class: contour
+EOF
+#
 
 
