@@ -27,6 +27,9 @@ kubectl create namespace projectcontour
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
+# Open up the cluster
+kubectl apply -f https://github.com/ogelbric/YAML/raw/master/authorize-psp-for-gc-service-accounts.yaml
+#
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
