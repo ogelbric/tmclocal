@@ -52,27 +52,24 @@ helm search repo bitnami | grep cert
 helm install cert-manager bitnami/cert-manager --namespace cert-manager  --set installCRDs=true
 # Make sure they are running
 watch kubectl get pods -n cert-manager
-# Generate letsencrypt file
-cat << EOF > letsencrypt-staging.yaml
-apiVersion: cert-manager.io/v1alpha2
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-staging
-spec:
-  acme:
-    email: $EMAIL_ADDRESS
-    privateKeySecretRef:
-      name: letsencrypt-staging
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    solvers:
-    - http01:
-        ingress:
-          class: contour
-EOF
-#
+# Generate Certs
+# Generate CA files (.crt and .pem)
+openssl genrsa -out servercakey.pem
+openssl req -new -x509 -key servercakey.pem -out serverca.crt
+# Create private key and public key
+openssl genrsa -out server.key
+openssl req -new -key server.key -out server_reqout.txt
+openssl x509 -req -in server_reqout.txt -days 3650 -sha256 -CAcreateserial -CA serverca.crt -CAkey servercakey.pem -out server.crt
+cp serverca.crt tls.crt
+cp servercakey.pem tls.key
+cat tls.crt | base64 -w 0
+cat tls.key | base64 -w 0
 
 
 
+
+
+# Randon Trouble shooting items
 # Delete cert manager
 helm del  cert-manager
 
