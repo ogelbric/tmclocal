@@ -41,7 +41,7 @@ kubectl describe svc ingress-contour-envoy --namespace projectcontour | grep Ing
 # Update DNS with IP
 # Add a new subdomain tmclocal.lab.local and apply star A record to the above found IP.
 ```
-![GitHub](DNSTMClocal.png)
+![GitHub](DNStmclocal.png)
 ```
 # Add environement variables
 export DOMAIN=tmclocal.lab.local
