@@ -72,6 +72,39 @@ kubectl apply -f clusterissuer.yaml -n cert-manager
 kubectl get clusterissuers.cert-manager.io -n cert-manager
 # NAME           READY   AGE
 #  local-issuer   True    3m42s
+#
+# Install Harbor in a POD
+kubectl create namespace harbor
+# Create harbor values file
+cat << EOF > harbor-values.yaml
+harborAdminPassword: Password12345
+
+service:
+  type: ClusterIP
+  tls:
+    enabled: true
+    existingSecret: harbor-tls-staging
+    notaryExistingSecret: notary-tls-staging
+
+ingress:
+  enabled: true
+  hosts:
+    core: registry.$DOMAIN
+    notary: notary.$DOMAIN
+  annotations:
+    cert-manager.io/cluster-issuer: local-issuer         # use llocal-issuer as the cluster issuer for TLS certs
+    ingress.kubernetes.io/force-ssl-redirect: "true"     # force https, even if http is requested
+    kubernetes.io/ingress.class: contour                 # using Contour for ingress
+    kubernetes.io/tls-acme: "true"                       # using ACME certificates for TLS
+externalURL: https://registry.$DOMAIN
+
+portal:
+  tls:
+    existingSecret: harbor-tls-staging
+EOF
+#
+# Install Harbor
+helm install harbor bitnami/harbor -f harbor-values.yaml -n harbor
 
 
 
