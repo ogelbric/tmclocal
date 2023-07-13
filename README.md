@@ -64,20 +64,20 @@ cp serverca.crt tls.crt
 cp servercakey.pem tls.key
 export tlscrt=`cat tls.crt | base64 -w 0`
 export tlskey=`cat tls.key | base64 -w 0`
+wget https://github.com/ogelbric/tmclocal/raw/main/clusterissuer.yaml.orig
 sed "s/changetlscrt/$tlscrt/g" clusterissuer.yaml.orig | sed "s/changetlskey/$tlskey/g" > clusterissuer.yaml
-
-#Need yaml
-
-
-
+# Apply the cert(s)
+kubectl apply -f clusterissuer.yaml -n cert-manager
+# Check the output
 kubectl get clusterissuers.cert-manager.io -n cert-manager
-NAME           READY   AGE
-local-issuer   True    3m42s
+# NAME           READY   AGE
+#  local-issuer   True    3m42s
 
 
 
 # Randon Trouble shooting items
 # Delete cert manager
 helm del  cert-manager
-
+# List bitnami repo
+helm search repo bitnami 
 
