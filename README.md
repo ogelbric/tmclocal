@@ -62,10 +62,17 @@ openssl req -new -key server.key -out server_reqout.txt
 openssl x509 -req -in server_reqout.txt -days 3650 -sha256 -CAcreateserial -CA serverca.crt -CAkey servercakey.pem -out server.crt
 cp serverca.crt tls.crt
 cp servercakey.pem tls.key
-cat tls.crt | base64 -w 0
-cat tls.key | base64 -w 0
+export tlscrt=`cat tls.crt | base64 -w 0`
+export tlskey=`cat tls.key | base64 -w 0`
+sed "s/changetlscrt/$tlscrt/g" clusterissuer.yaml.orig | sed "s/changetlskey/$tlskey/g" > clusterissuer.yaml
+
+#Need yaml
 
 
+
+kubectl get clusterissuers.cert-manager.io -n cert-manager
+NAME           READY   AGE
+local-issuer   True    3m42s
 
 
 
