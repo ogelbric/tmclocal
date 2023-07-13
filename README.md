@@ -43,8 +43,14 @@ kubectl describe svc ingress-contour-envoy --namespace projectcontour | grep Ing
 ```
 ![GitHub](DNStmclocal.png)
 ```
-# Add environement variables
+# Add environement variables for cert manager
 export DOMAIN=tmclocal.lab.local
 export EMAIL_ADDRESS=ogelbrich@vmware.com
 #
+kubectl create namespace cert-manager
+helm search repo bitnami | grep cert
+helm install cert-manager bitnami/cert-manager --namespace cert-manager  --set installCRDs=true
+# Make sure they are running
+watch kubectl get pods -n cert-manager
+
 
