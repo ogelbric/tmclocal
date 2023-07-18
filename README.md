@@ -163,9 +163,13 @@ bash /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/scripts/generate-passwords
 sed -i 's/hostname: harbor.yourdomain.com/hostname: registry.tmclocal.lab.local/g' harbor-data-values.yam
 SE=$(kubectl get sc | grep def | awk '{ print $1 }')
 sed -i "s/storageClass: \"\"/storageClass: \"$SE\"/g" harbor-data-values.yaml
+yq -i eval '... comments=""' harbor-data-values.yaml
 
-
-
+tanzu package install harbor \
+--package harbor.tanzu.vmware.com \
+--version 2.7.1+vmware.1-tkg.1 \
+--values-file harbor-data-values.yaml \
+--namespace harbor
 
 # Randon Trouble shooting items
 # Delete cert manager
