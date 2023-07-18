@@ -80,7 +80,7 @@ cat << EOF > harbor-values.yaml
 harborAdminPassword: Password12345
 
 service:
-  type: ClusterIP
+  type: Ingress
   tls:
     enabled: true
     existingSecret: harbor-tls-staging
@@ -104,13 +104,32 @@ portal:
 EOF
 #
 # Install Harbor
+#
 helm install harbor bitnami/harbor -f harbor-values.yaml -n harbor
+#
 # Makre sure POD(s) are up
+#
 watch kubectl get pods -n harbor
+#
 # Look at the requested certs
+#
 kubectl -n harbor get certificate
+#
 
-# Wait ?  where are they
+# some how the above harbor values file does not generate in my environment the proper ingress service and I had to edit it by hand
+# with below output
+#
+k edit ingress harbor-ingress  -n harbor
+k edit ingress harbor-ingress-notary  -n harbor
+kubectl get ingress -A
+# harbor      harbor-ingress          <none>   registry.tmclocal.lab.local   192.168.2.105   80, 443   21h
+# harbor      harbor-ingress-notary   <none>   notary.tmclocal.lab.local     192.168.2.105   80, 443   21h
+#
+k get svc -A | grep ingress
+# projectcontour      ingress-contour                   ClusterIP      198.48.119.233   <none>          8001/TCP                     5d
+# projectcontour      ingress-contour-envoy             LoadBalancer   198.63.142.20    192.168.2.105   80:30106/TCP,443:31682/TCP   5d
+
+
 
 
 # Randon Trouble shooting items
