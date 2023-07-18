@@ -143,8 +143,17 @@ tanzu package repository add tanzu-standard --url projects.registry.vmware.com/t
 # List all the packages
 #
 tanzu package available list -A
-
-
+tanzu package available list harbor.tanzu.vmware.com -A
+#
+#  NAMESPACE   NAME                     VERSION               RELEASED-AT                    
+#  tkg-system  harbor.tanzu.vmware.com  2.2.3+vmware.1-tkg.1  2021-07-07 14:00:00 -0400 EDT  
+#  tkg-system  harbor.tanzu.vmware.com  2.2.3+vmware.1-tkg.2  2021-07-07 14:00:00 -0400 EDT  
+#  tkg-system  harbor.tanzu.vmware.com  2.3.3+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
+#  tkg-system  harbor.tanzu.vmware.com  2.5.3+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
+#  tkg-system  harbor.tanzu.vmware.com  2.7.1+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
+#
+# note + changes to _
+imgpkg pull -b projects.registry.vmware.com/tkg/packages/standard/harbor:v2.7.1_vmware.1-tkg.1 -o /tmp/harbor-package-v2.7.1_vmware.1-tkg.1
 
 # Randon Trouble shooting items
 # Delete cert manager
