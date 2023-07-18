@@ -154,6 +154,17 @@ tanzu package available list harbor.tanzu.vmware.com -A
 #
 # note + changes to _
 imgpkg pull -b projects.registry.vmware.com/tkg/packages/standard/harbor:v2.7.1_vmware.1-tkg.1 -o /tmp/harbor-package-v2.7.1_vmware.1-tkg.1
+#
+
+cp /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/values.yaml harbor-data-values.yaml
+wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+    chmod +x /usr/bin/yq
+
+bash /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/scripts/generate-passwords.sh harbor-data-values.yaml
+
+
+
+
 
 # Randon Trouble shooting items
 # Delete cert manager
