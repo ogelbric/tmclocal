@@ -135,6 +135,7 @@ k get svc -A | grep ingress
 # Randon Trouble shooting items
 # Delete cert manager
 helm del  cert-manager
+helm del  harbor -n harbor
 # List bitnami repo
 helm search repo bitnami 
 
