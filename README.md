@@ -130,6 +130,20 @@ k get svc -A | grep ingress
 # projectcontour      ingress-contour-envoy             LoadBalancer   198.63.142.20    192.168.2.105   80:30106/TCP,443:31682/TCP   5d
 
 
+#
+# New try via tanzu to install harbor
+#
+# Tanzu CLI
+https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/2.2/using-tkg-22/install-cli.html
+#
+# Tanzu Reop
+#
+tanzu package repository add tanzu-standard --url projects.registry.vmware.com/tkg/packages/standard/repo:v2.2.0 --namespace tkg-system
+#
+# List all the packages
+#
+tanzu package available list -A
+
 
 
 # Randon Trouble shooting items
