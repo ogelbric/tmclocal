@@ -201,7 +201,7 @@ tanzu package available list contour.tanzu.vmware.com -A
 #  NAMESPACE   NAME                      VERSION                RELEASED-AT                    
 #  tkg-system  contour.tanzu.vmware.com  1.23.5+vmware.1-tkg.1  2023-04-04 20:00:00 -0400 EDT  
 
-tanzu package available get contour.tanzu.vmware.com/1.23.5+vmware.1-tkg.1 --default-values-file-output ./harbor-install
+tanzu package available get contour.tanzu.vmware.com/1.23.5+vmware.1-tkg.1 --default-values-file-output contour-data-values.yaml
 
 
 # Randon Trouble shooting items
