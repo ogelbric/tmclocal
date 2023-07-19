@@ -177,4 +177,7 @@ helm del  cert-manager
 helm del  harbor -n harbor
 # List bitnami repo
 helm search repo bitnami 
-
+helm del harbor -n harbor
+helm del ingress -n projectcontour  
+helm del cert-manager -n cert-manager
+ 
