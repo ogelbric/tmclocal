@@ -171,6 +171,30 @@ tanzu package install harbor \
 --values-file harbor-data-values.yaml \
 --namespace harbor
 
+
+
+# 1) Cert manager
+
+tanzu package available list cert-manager.tanzu.vmware.com -A
+
+#  NAMESPACE   NAME                           VERSION                RELEASED-AT                    
+#  tkg-system  cert-manager.tanzu.vmware.com  1.1.0+vmware.1-tkg.2   2020-11-24 13:00:00 -0500 EST  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.1.0+vmware.2-tkg.1   2020-11-24 13:00:00 -0500 EST  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.10.2+vmware.1-tkg.1  2023-01-11 07:00:00 -0500 EST  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.5.3+vmware.2-tkg.1   2021-08-23 13:22:51 -0400 EDT  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.5.3+vmware.4-tkg.1   2021-08-23 13:22:51 -0400 EDT  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.5.3+vmware.7-tkg.1   2021-08-23 13:22:51 -0400 EDT  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.5.3+vmware.7-tkg.3   2021-08-23 13:22:51 -0400 EDT  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.7.2+vmware.1-tkg.1   2021-10-29 08:00:00 -0400 EDT  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.7.2+vmware.3-tkg.1   2021-10-29 08:00:00 -0400 EDT  
+#  tkg-system  cert-manager.tanzu.vmware.com  1.7.2+vmware.3-tkg.3   2021-10-29 08:00:00 -0400 EDT  
+#
+
+
+
+
+
+
 # Randon Trouble shooting items
 # Delete cert manager
 helm del  cert-manager
