@@ -180,4 +180,6 @@ helm search repo bitnami
 helm del harbor -n harbor
 helm del ingress -n projectcontour  
 helm del cert-manager -n cert-manager
- 
+
+tanzu package available     list
+
