@@ -176,6 +176,8 @@ tanzu package installed get harbor --namespace harbor
 kubectl get apps -A
 kubectl get pods -n tanzu-system-registry
 
+kubectl -n tanzu-system-registry get secret harbor-tls -o=jsonpath="{.data.ca\.crt}" | base64 -d
+
 
 
 # 1) Cert manager
