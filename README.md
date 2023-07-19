@@ -200,8 +200,54 @@ tanzu package available list contour.tanzu.vmware.com -A
 
 #  NAMESPACE   NAME                      VERSION                RELEASED-AT                    
 #  tkg-system  contour.tanzu.vmware.com  1.23.5+vmware.1-tkg.1  2023-04-04 20:00:00 -0400 EDT  
-
+# contour-data-values file can be obtained with below command
 tanzu package available get contour.tanzu.vmware.com/1.23.5+vmware.1-tkg.1 --default-values-file-output contour-data-values.yaml
+# or use this file
+cat << EOF > contour-data-values.yaml
+---
+infrastructure_provider: vsphere
+namespace: tanzu-system-ingress
+contour:
+ configFileContents: {}
+ useProxyProtocol: false
+ replicas: 2
+ pspNames: "vmware-system-restricted"
+ logLevel: info
+envoy:
+ service:
+   type: LoadBalancer
+   annotations: {}
+   nodePorts:
+     http: null
+     https: null
+   externalTrafficPolicy: Cluster
+   disableWait: false
+ hostPorts:
+   enable: true
+   http: 80
+   https: 443
+ hostNetwork: false
+ terminationGracePeriodSeconds: 300
+ logLevel: info
+ pspNames: null
+certificates:
+ duration: 8760h
+ renewBefore: 360h
+EOF
+#
+kubectl create clusterrolebinding envoy-tkg-admin-privileged-binding --clusterrole=psp:vmware-system-privileged --serviceaccount=tanzu-system-ingress:envoy
+#
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Randon Trouble shooting items
