@@ -143,45 +143,10 @@ tanzu package repository add tanzu-standard --url projects.registry.vmware.com/t
 # List all the packages
 #
 tanzu package available list -A
-tanzu package available list harbor.tanzu.vmware.com -A
+
 #
-#  NAMESPACE   NAME                     VERSION               RELEASED-AT                    
-#  tkg-system  harbor.tanzu.vmware.com  2.2.3+vmware.1-tkg.1  2021-07-07 14:00:00 -0400 EDT  
-#  tkg-system  harbor.tanzu.vmware.com  2.2.3+vmware.1-tkg.2  2021-07-07 14:00:00 -0400 EDT  
-#  tkg-system  harbor.tanzu.vmware.com  2.3.3+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
-#  tkg-system  harbor.tanzu.vmware.com  2.5.3+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
-#  tkg-system  harbor.tanzu.vmware.com  2.7.1+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
-#
-# note + changes to _
-imgpkg pull -b projects.registry.vmware.com/tkg/packages/standard/harbor:v2.7.1_vmware.1-tkg.1 -o /tmp/harbor-package-v2.7.1_vmware.1-tkg.1
-#
-
-cp /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/values.yaml harbor-data-values.yaml
-wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
-
-bash /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/scripts/generate-passwords.sh harbor-data-values.yaml
-sed -i 's/hostname: harbor.yourdomain.com/hostname: registry.tmclocal.lab.local/g' harbor-data-values.yam
-SE=$(kubectl get sc | grep def | awk '{ print $1 }')
-sed -i "s/storageClass: \"\"/storageClass: \"$SE\"/g" harbor-data-values.yaml
-yq -i eval '... comments=""' harbor-data-values.yaml
-
-tanzu package install harbor \
---package harbor.tanzu.vmware.com \
---version 2.7.1+vmware.1-tkg.1 \
---values-file harbor-data-values.yaml \
---namespace harbor
-#
-tanzu package installed list -A
-tanzu package installed get harbor --namespace harbor
-kubectl get apps -A
-kubectl get pods -n tanzu-system-registry
-
-kubectl -n tanzu-system-registry get secret harbor-tls -o=jsonpath="{.data.ca\.crt}" | base64 -d
-
-
-
 # 1) Cert manager
-
+#
 tanzu package available list cert-manager.tanzu.vmware.com -A
 
 #  NAMESPACE   NAME                           VERSION                RELEASED-AT                    
@@ -199,12 +164,11 @@ tanzu package available list cert-manager.tanzu.vmware.com -A
 tanzu package install cert-manager --package cert-manager.tanzu.vmware.com --namespace cert-manager --version 1.10.2+vmware.1-tkg.1
 tanzu package installed list -A
 kubectl get apps -A
-
-
+#
 # 2) Contour
-
+#
 tanzu package available list contour.tanzu.vmware.com -A
-
+#
 #  NAMESPACE   NAME                      VERSION                RELEASED-AT                    
 #  tkg-system  contour.tanzu.vmware.com  1.23.5+vmware.1-tkg.1  2023-04-04 20:00:00 -0400 EDT  
 # contour-data-values file can be obtained with below command
@@ -263,7 +227,53 @@ get pods -A | grep contour
 # tanzu-system-ingress           contour-747dbc88b8-29bf5                                             1/1     Running     0               4m49s
 # tanzu-system-ingress           contour-747dbc88b8-hl5d2                                             1/1     Running     0               4m49s
 
+#
+# 3) Install Harbor
+#
+tanzu package installed list -A
 
+tanzu package available list harbor.tanzu.vmware.com -A
+#
+#  NAMESPACE   NAME                     VERSION               RELEASED-AT                    
+#  tkg-system  harbor.tanzu.vmware.com  2.2.3+vmware.1-tkg.1  2021-07-07 14:00:00 -0400 EDT  
+#  tkg-system  harbor.tanzu.vmware.com  2.2.3+vmware.1-tkg.2  2021-07-07 14:00:00 -0400 EDT  
+#  tkg-system  harbor.tanzu.vmware.com  2.3.3+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
+#  tkg-system  harbor.tanzu.vmware.com  2.5.3+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
+#  tkg-system  harbor.tanzu.vmware.com  2.7.1+vmware.1-tkg.1  2021-09-28 02:05:00 -0400 EDT  
+#
+# note + changes to _
+imgpkg pull -b projects.registry.vmware.com/tkg/packages/standard/harbor:v2.7.1_vmware.1-tkg.1 -o /tmp/harbor-package-v2.7.1_vmware.1-tkg.1
+#
+
+cp /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/values.yaml harbor-data-values.yaml
+wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
+
+bash /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/scripts/generate-passwords.sh harbor-data-values.yaml
+sed -i 's/hostname: harbor.yourdomain.com/hostname: registry.tmclocal.lab.local/g' harbor-data-values.yam
+SE=$(kubectl get sc | grep def | awk '{ print $1 }')
+sed -i "s/storageClass: \"\"/storageClass: \"$SE\"/g" harbor-data-values.yaml
+yq -i eval '... comments=""' harbor-data-values.yaml
+
+tanzu package install harbor \
+--package harbor.tanzu.vmware.com \
+--version 2.7.1+vmware.1-tkg.1 \
+--values-file harbor-data-values.yaml \
+--namespace harbor
+#
+tanzu package installed list -A
+tanzu package installed get harbor --namespace harbor
+kubectl get apps -A
+kubectl get pods -n tanzu-system-registry
+
+kubectl -n tanzu-system-registry get secret harbor-tls -o=jsonpath="{.data.ca\.crt}" | base64 -d
+k get proxy -A
+# NAMESPACE               NAME                      FQDN                                 TLS SECRET   STATUS   STATUS DESCRIPTION
+# tanzu-system-registry   harbor-httpproxy          registry.tmclocal.lab.local          harbor-tls   valid    Valid HTTPProxy
+# tanzu-system-registry   harbor-httpproxy-notary   notary.registry.tmclocal.lab.local   harbor-tls   valid    Valid HTTPProxy
+#
+# admin Password
+grep -i harborAdminPassword harbor-data-values.yaml | awk '{ print $2 }'
+lpJUUAJRG4xE6XyK
 
 
 
