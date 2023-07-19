@@ -236,7 +236,26 @@ certificates:
 EOF
 #
 kubectl create clusterrolebinding envoy-tkg-admin-privileged-binding --clusterrole=psp:vmware-system-privileged --serviceaccount=tanzu-system-ingress:envoy
+# Remove comments
+yq -i eval '... comments=""' contour-data-values.yaml
 #
+#
+tanzu package install contour \
+--package contour.tanzu.vmware.com \
+--version 1.23.5+vmware.1-tkg.1 \
+--values-file contour-data-values.yaml \
+--namespace projectcontour
+#
+tanzu package installed list -A
+#
+kubectl get apps -A
+#
+get pods -A | grep contour
+#
+# default                        my-release-contour-contour-certgen-nb995                             0/1     Completed   0               6d
+# tanzu-system-ingress           contour-747dbc88b8-29bf5                                             1/1     Running     0               4m49s
+# tanzu-system-ingress           contour-747dbc88b8-hl5d2                                             1/1     Running     0               4m49s
+
 
 
 
