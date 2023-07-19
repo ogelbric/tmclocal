@@ -170,6 +170,11 @@ tanzu package install harbor \
 --version 2.7.1+vmware.1-tkg.1 \
 --values-file harbor-data-values.yaml \
 --namespace harbor
+#
+tanzu package installed list -A
+tanzu package installed get harbor --namespace harbor
+kubectl get apps -A
+kubectl get pods -n tanzu-system-registry
 
 
 
