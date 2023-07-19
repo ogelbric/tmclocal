@@ -190,9 +190,18 @@ tanzu package available list cert-manager.tanzu.vmware.com -A
 #  tkg-system  cert-manager.tanzu.vmware.com  1.7.2+vmware.3-tkg.3   2021-10-29 08:00:00 -0400 EDT  
 #
 tanzu package install cert-manager --package cert-manager.tanzu.vmware.com --namespace cert-manager --version 1.10.2+vmware.1-tkg.1
+tanzu package installed list -A
+kubectl get apps -A
 
 
+# 2) Contour
 
+tanzu package available list contour.tanzu.vmware.com -A
+
+#  NAMESPACE   NAME                      VERSION                RELEASED-AT                    
+#  tkg-system  contour.tanzu.vmware.com  1.23.5+vmware.1-tkg.1  2023-04-04 20:00:00 -0400 EDT  
+
+tanzu package available get contour.tanzu.vmware.com/1.23.5+vmware.1-tkg.1 --default-values-file-output ./harbor-install
 
 
 # Randon Trouble shooting items
@@ -206,4 +215,7 @@ helm del ingress -n projectcontour
 helm del cert-manager -n cert-manager
 
 tanzu package available     list
+tanzu package installed delete harbor --namespace harbor
+
+
 
