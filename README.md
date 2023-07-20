@@ -29,7 +29,9 @@ kubectl apply -f https://github.com/ogelbric/YAML/raw/master/authorize-psp-for-g
 #
 # Create install dir
 #
+```
 mkdir harbor-install && cd $_
+```
 #
 # Tanzu CLI
 #
@@ -37,31 +39,34 @@ https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/2.2/using-tkg-22/install
 #
 # Tanzu Repo
 #
+```
 tanzu package repository add tanzu-standard --url projects.registry.vmware.com/tkg/packages/standard/repo:v2.2.0 --namespace tkg-system
+```
 #
 # List all the packages
 #
+```
 tanzu package available list -A
-
+```
 #
 # 3) Cert manager
 #
 # Create install dir
+```
 mkdir harbor-install && cd $_
+```
 # Add environement variables for cert manager
+```
 export DOMAIN=tmclocal.lab.local
 export EMAIL_ADDRESS=ogelbrich@vmware.com
+```
 #
-kubectl create namespace cert-manager
-helm search repo bitnami | grep cert
-helm install cert-manager bitnami/cert-manager --namespace cert-manager  --set installCRDs=true
-# Make sure they are running
-watch kubectl get pods -n cert-manager
-# Generate Certs
-# Generate CA files (.crt and .pem)
+```
 openssl genrsa -out servercakey.pem
 openssl req -new -x509 -key servercakey.pem -out serverca.crt
+```
 # Create private key and public key
+```
 openssl genrsa -out server.key
 openssl req -new -key server.key -out server_reqout.txt
 openssl x509 -req -in server_reqout.txt -days 3650 -sha256 -CAcreateserial -CA serverca.crt -CAkey servercakey.pem -out server.crt
@@ -73,15 +78,19 @@ wget https://github.com/ogelbric/tmclocal/raw/main/clusterissuer.yaml.orig
 sed "s/changetlscrt/$tlscrt/g" clusterissuer.yaml.orig | sed "s/changetlskey/$tlskey/g" > clusterissuer.yaml
 # Apply the cert(s)
 kubectl apply -f clusterissuer.yaml -n cert-manager
+```
 # Check the output
+```
 kubectl get clusterissuers.cert-manager.io -n cert-manager
+
 # NAME           READY   AGE
 #  local-issuer   True    3m42s
 #
 #
+```
 
 tanzu package available list cert-manager.tanzu.vmware.com -A
-
+```
 #  NAMESPACE   NAME                           VERSION                RELEASED-AT                    
 #  tkg-system  cert-manager.tanzu.vmware.com  1.1.0+vmware.1-tkg.2   2020-11-24 13:00:00 -0500 EST  
 #  tkg-system  cert-manager.tanzu.vmware.com  1.1.0+vmware.2-tkg.1   2020-11-24 13:00:00 -0500 EST  
@@ -94,6 +103,7 @@ tanzu package available list cert-manager.tanzu.vmware.com -A
 #  tkg-system  cert-manager.tanzu.vmware.com  1.7.2+vmware.3-tkg.1   2021-10-29 08:00:00 -0400 EDT  
 #  tkg-system  cert-manager.tanzu.vmware.com  1.7.2+vmware.3-tkg.3   2021-10-29 08:00:00 -0400 EDT  
 #
+```
 tanzu package install cert-manager --package cert-manager.tanzu.vmware.com --namespace cert-manager --version 1.10.2+vmware.1-tkg.1
 tanzu package installed list -A
 kubectl get apps -A
