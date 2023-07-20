@@ -177,10 +177,11 @@ kubectl get svc --namespace tanzu-system-ingress  -w
 # Add a new subdomain tmclocal.lab.local and apply star A record to the above found IP.
 ```
 ![GitHub](DNStmclocal.png)
-```
+
 #
 # 5) Install Harbor
 #
+```
 tanzu package installed list -A
 
 tanzu package available list harbor.tanzu.vmware.com -A
@@ -234,6 +235,16 @@ k get proxy -A
 grep -i harborAdminPassword harbor-data-values.yaml | awk '{ print $2 }'
 # lpJUUAJRG4xE6XyK
 
+```
+
+#
+# Deploy TMC local repo items
+#
+
+
+#
+# Deploy TMC local
+#
 
 
 
