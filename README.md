@@ -110,6 +110,7 @@ kubectl get apps -A
 #
 # 4) Contour
 #
+```
 tanzu package available list contour.tanzu.vmware.com -A
 #
 #  NAMESPACE   NAME                      VERSION                RELEASED-AT                    
