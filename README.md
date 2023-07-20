@@ -33,9 +33,10 @@ kubectl apply -f https://github.com/ogelbric/YAML/raw/master/authorize-psp-for-g
 mkdir harbor-install && cd $_
 ```
 #
-# Tanzu CLI
+# Tanzu CLI + Doc for Cert manager, Contour, Harbor
 #
 https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/2.2/using-tkg-22/install-cli.html
+https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/2.2/using-tkg-22/workload-packages-cni.html
 #
 # Tanzu Repo
 #
