@@ -241,6 +241,10 @@ grep -i harborAdminPassword harbor-data-values.yaml | awk '{ print $2 }'
 #
 # Deploy TMC local repo items
 #
+```
+# Download link
+https://customerconnect.vmware.com/en/downloads/info/slug/infrastructure_operations_management/vmware_tanzu_mission_control_self_managed/1_0_0
+```
 
 
 #
