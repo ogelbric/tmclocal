@@ -257,7 +257,8 @@ mkdir tanzumc
 tar -xf tmc-self-managed-1.0.0.tar -C ./tanzumc  
 
 Create a new project in Harbor called: harbor-project
-
+# Push images to Regestry:
+tanzumc/tmc-sm push-images harbor --project https://registry.tmclocal.lab.local/harbor-project --username admin --password lpJUUAJRG4xE6XyK  
 ```
 
 
