@@ -256,6 +256,8 @@ pscp .\tmc-self-managed-1.0.0.tar root@192.168.1.5:/root/harbor-install/.
 mkdir tanzumc
 tar -xf tmc-self-managed-1.0.0.tar -C ./tanzumc  
 
+Create a new project in Harbor called: harbor-project
+
 ```
 
 
