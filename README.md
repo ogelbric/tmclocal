@@ -265,7 +265,7 @@ tar -xf tmc-self-managed-1.0.0.tar -C ./tanzumc
 
 
 
-
+```
 
 # Randon Trouble shooting items
 # Delete cert manager
@@ -315,11 +315,7 @@ watch kubectl get pods -n projectcontour
 # Get the IP
 kubectl get svc ingress-contour-envoy --namespace projectcontour -w
 kubectl describe svc ingress-contour-envoy --namespace projectcontour | grep Ingress | awk '{print $3}'
-# Update DNS with IP
-# Add a new subdomain tmclocal.lab.local and apply star A record to the above found IP.
-```
-![GitHub](DNStmclocal.png)
-```
+
 # Add environement variables for cert manager
 export DOMAIN=tmclocal.lab.local
 export EMAIL_ADDRESS=ogelbrich@vmware.com
@@ -405,3 +401,4 @@ kubectl get ingress -A
 k get svc -A | grep ingress
 # projectcontour      ingress-contour                   ClusterIP      198.48.119.233   <none>          8001/TCP                     5d
 # projectcontour      ingress-contour-envoy             LoadBalancer   198.63.142.20    192.168.2.105   80:30106/TCP,443:31682/TCP   5d
+```
