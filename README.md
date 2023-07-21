@@ -244,6 +244,8 @@ grep -i harborAdminPassword harbor-data-values.yaml | awk '{ print $2 }'
 ```
 # Download link
 https://customerconnect.vmware.com/en/downloads/info/slug/infrastructure_operations_management/vmware_tanzu_mission_control_self_managed/1_0_0
+# Move from Windoes to Linux box
+pscp .\tmc-self-managed-1.0.0.tar root@192.168.1.5:/root/harbor-install/.
 ```
 
 
