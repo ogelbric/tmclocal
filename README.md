@@ -252,7 +252,11 @@ pscp .\tmc-self-managed-1.0.0.tar root@192.168.1.5:/root/harbor-install/.
 #
 # Deploy TMC local
 #
+```
+mkdir tanzumc
+tar -xf tmc-self-managed-1.0.0.tar -C ./tanzumc  
 
+```
 
 
 
