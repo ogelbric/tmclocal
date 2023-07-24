@@ -247,7 +247,14 @@ https://customerconnect.vmware.com/en/downloads/info/slug/infrastructure_operati
 # Move from Windoes to Linux box
 pscp .\tmc-self-managed-1.0.0.tar root@192.168.1.5:/root/harbor-install/.
 ```
-
+#
+# Create jump box file with Harbor cert
+#
+```
+# log onto harbor and grap the cert and paste into below file
+vi /etc/ssl/certs/registry.tmclocal.lab.local.cert 
+chmod 444 /etc/ssl/certs/registry.tmclocal.lab.local.cert 
+```
 
 #
 # Deploy TMC local
@@ -255,11 +262,37 @@ pscp .\tmc-self-managed-1.0.0.tar root@192.168.1.5:/root/harbor-install/.
 ```
 mkdir tanzumc
 tar -xf tmc-self-managed-1.0.0.tar -C ./tanzumc  
-
+cd tanzumc
 Create a new project in Harbor called: harbor-project
 # Push images to Regestry:
-tanzumc/tmc-sm push-images harbor --project https://registry.tmclocal.lab.local/harbor-project --username admin --password lpJUUAJRG4xE6XyK  
+./tmc-sm push-images harbor --project registry.tmclocal.lab.local/harbor-project --username admin --password lpJUUAJRG4xE6XyK
+
 ```
+
+#
+# Should look like this
+#
+```
+INFO[0017] Pushing PackageRepository                     uri=registry.tmclocal.lab.local/harbor-project/package-repository
+Image Staging Complete. Next Steps:
+Setup Kubeconfig (if not already done) to point to cluster:
+export KUBECONFIG={YOUR_KUBECONFIG}
+
+Create 'tmc-local' namespace: kubectl create namespace tmc-local
+
+Download Tanzu CLI from Customer Connect (If not already installed)
+
+Update TMC Self Managed Package Repository:
+Run: tanzu package repository add tanzu-mission-control-packages --url "registry.tmclocal.lab.local/harbor-project/package-repository:1.0.0" --namespace tmc-local
+
+Create a values based on the TMC Self Managed Package Schema:
+View the Values Schema: tanzu package available get "tmc.tanzu.vmware.com/1.0.0" --namespace tmc-local --values-schema
+Create a Values file named values.yaml matching the schema
+
+Install the TMC Self Managed Package:
+Run: tanzu package install tanzu-mission-control -p tmc.tanzu.vmware.com --version "1.0.0" --values-file values.yaml --namespace tmc-local
+```
+
 
 
 
