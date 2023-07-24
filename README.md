@@ -293,6 +293,17 @@ Install the TMC Self Managed Package:
 Run: tanzu package install tanzu-mission-control -p tmc.tanzu.vmware.com --version "1.0.0" --values-file values.yaml --namespace tmc-local
 ```
 
+#
+# Deploy TMC local
+#
+```
+kubectl create namespace tmc-local
+```
+
+
+
+
+
 
 
 
