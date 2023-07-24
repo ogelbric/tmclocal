@@ -298,6 +298,9 @@ Run: tanzu package install tanzu-mission-control -p tmc.tanzu.vmware.com --versi
 #
 ```
 kubectl create namespace tmc-local
+tanzu package repository add tanzu-mission-control-packages --url "registry.tmclocal.lab.local/harbor-project/package-repository:1.0.0" --namespace tmc-local
+
+
 ```
 
 
