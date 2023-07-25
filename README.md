@@ -202,7 +202,7 @@ cp /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/values.yaml harbor-data-valu
 wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
 
 bash /tmp/harbor-package-v2.7.1_vmware.1-tkg.1/config/scripts/generate-passwords.sh harbor-data-values.yaml
-sed -i 's/hostname: harbor.yourdomain.com/hostname: registry.tmclocal.lab.local/g' harbor-data-values.yam
+sed -i 's/hostname: harbor.yourdomain.com/hostname: registry.tmclocal.lab.local/g' harbor-data-values.yaml
 SE=$(kubectl get sc | grep def | awk '{ print $1 }')
 sed -i "s/storageClass: \"\"/storageClass: \"$SE\"/g" harbor-data-values.yaml
 yq -i eval '... comments=""' harbor-data-values.yaml
