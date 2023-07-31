@@ -251,7 +251,7 @@ pscp .\tmc-self-managed-1.0.0.tar root@192.168.1.5:/root/harbor-install/.
 # Create jump box file with Harbor cert
 #
 ```
-# log onto harbor and grap the cert and paste into below file
+# log onto harbor and grab the cert and paste into below file
 vi /etc/ssl/certs/registry.tmclocal.lab.local.cert 
 chmod 444 /etc/ssl/certs/registry.tmclocal.lab.local.cert 
 ```
